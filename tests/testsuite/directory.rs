@@ -19,7 +19,7 @@ fn home_directory() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("~"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("~"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -36,7 +36,7 @@ fn directory_in_home() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("~/starship/engine"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("~/starship/engine"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -54,7 +54,7 @@ fn truncated_directory_in_home() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan.bold().paint("starship/engine/schematics")
     );
     assert_eq!(expected, actual);
@@ -78,7 +78,7 @@ fn fish_directory_in_home() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("~/st/en/schematics"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("~/st/en/schematics"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -90,11 +90,12 @@ fn root_directory() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("/"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("/"));
     assert_eq!(expected, actual);
     Ok(())
 }
 
+// TODO: Remove this test once formatter support is fully implemented and prefix support has been removed.
 #[test]
 fn test_prefix() -> io::Result<()> {
     let output = common::render_module("directory")
@@ -106,7 +107,9 @@ fn test_prefix() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("sample {} ", Color::Cyan.bold().paint("/"));
+    // The prefix has been disabled with the latest formatter changes.
+    // Hence we don't expect to see it in the output even if set.
+    let expected = format!("{} ", Color::Cyan.bold().paint("/"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -119,7 +122,7 @@ fn directory_in_root() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("/etc"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("/etc"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -132,7 +135,7 @@ fn directory_in_root() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("/c"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("/c"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -149,10 +152,7 @@ fn truncated_directory_in_root() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!(
-        "in {} ",
-        Color::Cyan.bold().paint("starship/thrusters/rocket")
-    );
+    let expected = format!("{} ", Color::Cyan.bold().paint("starship/thrusters/rocket"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -174,7 +174,7 @@ fn truncated_directory_config_large() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan.bold().paint("/tmp/starship/thrusters/rocket")
     );
     assert_eq!(expected, actual);
@@ -199,7 +199,7 @@ fn fish_style_directory_config_large() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan.bold().paint("/tmp/starship/thrusters/rocket")
     );
     assert_eq!(expected, actual);
@@ -222,7 +222,7 @@ fn truncated_directory_config_small() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("thrusters/rocket"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("thrusters/rocket"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -244,7 +244,7 @@ fn fish_directory_config_small() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("/t/s/thrusters/rocket"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("/t/s/thrusters/rocket"));
     assert_eq!(expected, actual);
     Ok(())
 }
@@ -266,7 +266,7 @@ fn git_repo_root() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("rocket-controls"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("rocket-controls"));
     assert_eq!(expected, actual);
     tmp_dir.close()
 }
@@ -286,7 +286,7 @@ fn directory_in_git_repo() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("rocket-controls/src"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("rocket-controls/src"));
     assert_eq!(expected, actual);
     tmp_dir.close()
 }
@@ -306,7 +306,7 @@ fn truncated_directory_in_git_repo() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!("in {} ", Color::Cyan.bold().paint("src/meters/fuel-gauge"));
+    let expected = format!("{} ", Color::Cyan.bold().paint("src/meters/fuel-gauge"));
     assert_eq!(expected, actual);
     tmp_dir.close()
 }
@@ -333,7 +333,7 @@ fn directory_in_git_repo_truncate_to_repo_false() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan
             .bold()
             .paint("above-repo/rocket-controls/src/meters/fuel-gauge")
@@ -365,7 +365,7 @@ fn fish_path_directory_in_git_repo_truncate_to_repo_false() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan
             .bold()
             .paint("~/.t/above-repo/rocket-controls/src/meters/fuel-gauge")
@@ -397,7 +397,7 @@ fn fish_path_directory_in_git_repo_truncate_to_repo_true() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan
             .bold()
             .paint("~/.t/a/rocket-controls/src/meters/fuel-gauge")
@@ -428,7 +428,7 @@ fn directory_in_git_repo_truncate_to_repo_true() -> io::Result<()> {
     let actual = String::from_utf8(output.stdout).unwrap();
 
     let expected = format!(
-        "in {} ",
+        "{} ",
         Color::Cyan
             .bold()
             .paint("rocket-controls/src/meters/fuel-gauge")
@@ -460,10 +460,7 @@ fn git_repo_in_home_directory_truncate_to_repo_true() -> io::Result<()> {
         .output()?;
     let actual = String::from_utf8(output.stdout).unwrap();
 
-    let expected = format!(
-        "in {} ",
-        Color::Cyan.bold().paint("~/src/meters/fuel-gauge")
-    );
+    let expected = format!("{} ", Color::Cyan.bold().paint("~/src/meters/fuel-gauge"));
     assert_eq!(expected, actual);
     tmp_dir.close()
 }

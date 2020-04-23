@@ -49,6 +49,7 @@ pub const ALL_MODULES: &[&str] = &[
     "time",
     "username",
     "zlua",
+    "virtualenv",
 ];
 
 /// A module is a collection of segments showing data for a single integration

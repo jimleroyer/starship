@@ -38,8 +38,8 @@ mod terraform;
 mod time;
 mod username;
 mod utils;
-mod zlua;
 mod virtualenv;
+mod zlua;
 
 #[cfg(feature = "battery")]
 mod battery;

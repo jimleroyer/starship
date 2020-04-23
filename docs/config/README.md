@@ -1150,13 +1150,34 @@ The module will be shown if all of the following conditions are met:
 | `format`   | `"[\\($virtualenv\\)](yellow bold) "` | The format for the module.        |
 | `disabled` | `false`                               | Disables the `virtualenv` module. |
 
-### Example
-
 ```toml
 # ~/.config/starship.toml
 
 [virtualenv]
 format = "venv[ $virtualenv ] "
+```
+
+## R
+
+The `r` module shows the currently installed version of R.
+The module will be shown if any of the following conditions are met:
+
+- The current directory contains a `.R` file
+
+### Options
+
+| Variable   | Default                          | Description                |
+| ---------- | -------------------------------- | -------------------------- |
+| `format`   | `"via [R $version](blue bold) "` | The format for the module. |
+| `disabled` | `false`                          | Disables the `r` module.   |
+
+### Example
+
+```toml
+# ~/.config/starship.toml
+
+[r]
+format = "with [® $version](blue bold) "
 ```
 
 ## Ruby

@@ -73,10 +73,12 @@ pub fn exec_cmd(cmd: &str, args: &[&str]) -> Option<CommandOutput> {
             stdout: String::from("ruby 2.5.1p57 (2018-03-29 revision 63029) [x86_64-linux-gnu]"),
             stderr: String::default(),
         }),
-        "stack ghc --no-install-ghc -- --numeric-version" => Some(CommandOutput {
-            stdout: String::from("8.6.5"),
-            stderr: String::default(),
-        }),
+        "stack --no-install-ghc --lock-file read-only ghc -- --numeric-version" => {
+            Some(CommandOutput {
+                stdout: String::from("8.6.5"),
+                stderr: String::default(),
+            })
+        }
         "elixir --version" => Some(CommandOutput {
             stdout: String::from(
                 "\
@@ -93,6 +95,10 @@ Elixir 1.10 (compiled with Erlang/OTP 22)",
 78         /Projects/guides
 686        /Projects/starship",
             ),
+            stderr: String::default(),
+        }),
+        s if s.starts_with("erl") => Some(CommandOutput {
+            stdout: String::from("22.1.3"),
             stderr: String::default(),
         }),
         // If we don't have a mocked command fall back to executing the command
